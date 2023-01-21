@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+ .minute-con,.seconds-con,.hours-con
+{
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    right: 5em;
+    left: 5em;
+}
+
+body{
+    background-color: rgb(233, 193, 14);
+}
+        .contaner {
+            height: 37.5em;
+            width: 31.25em;
+            position: absolute;
+            border: 1px solid black;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        .clock
+        {
+            position: relative;
+            height: 25em;
+            width: 25em;
+            background-color: #fad168;
+            border-radius: 50%;
+            top: 5em;
+            left: 3em;
+            
+        }
+        .clock::before
+        {
+            content: "";
+            position: absolute;
+            height: 1.5em;
+            width: 7em;
+            /* border: 2px solid black; */
+            background-color: #fad168;
+            transform: rotate(-30deg);
+            top: 0.8em;
+            left: -1em;
+      
+          
+        }
+        .clock::after
+        {
+            content: "";
+            position: absolute;
+            height: 1.5em;
+            width: 7em;
+            /* border: 2px solid black; */
+            background-color: #fad168;
+            transform: rotate(30deg);
+            left: 18em;
+            top: 0em;
+        }
+        .back
+        {
+            content: "";
+            position: absolute;
+            height: 1.5em;
+            width: 7em;
+            /* border: 2px solid black; */
+            background-color: #fad168;
+            transform: rotate(30deg);
+            left: 18em;
+            top: 24em;
+        }
+        .back::after
+        {
+            content: "";
+            position: absolute;
+            height: 1.5em;
+            width: 7em;
+            /* border: 2px solid black; */
+            background-color: #fad168;
+            transform: rotate(105deg);
+            right: 16em;
+            top: 9.3em;
+        }
+        .cen
+        {
+           content: "";
+           position: absolute;
+           height: 1.9em;
+           width: 1.9em;
+           background-color: black;
+           top: 48%;
+           left: 11.5em;
+           border-radius: 50%;
+        }
+        .minutes
+        {
+            content: "";
+            position: absolute;
+            height: 8em;
+            width: 0.3em;
+            background-color: black;
+            top: 50%;
+            left: 50%;
+            border-radius: 0 0 50% 50% ;    
+            
+        }
+        .hours
+        {
+            content: "";
+            position: absolute;
+            height: 8em;
+            width: 0.4em;
+            background-color: black;      
+            transform-origin: 50% 100%;
+            top: 50%;
+            left: 7.5em;
+            border-radius: 0 0 50% 50% ;    
+            
+        }
+        .seconds
+        {
+            content: "";
+            position: absolute;
+            height: 10em;
+            width: 0.3em;
+            background-color: black;      
+            transform-origin: 50% 80%;
+            top: 50%;
+            left: 7.2em;
+            z-index: 8;      
+            border-radius: 0 0 50% 50% ;    
+            
+        }
+        .clock h2
+        {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .time-1
+        {
+            position: absolute;
+            top: -0.5em;
+            left: 11em;
+            
+        }
+         .time-2
+        {
+            position: absolute;
+            bottom: -0.5em;
+            left: 12em;
+            
+        }
+
+        .time-3 
+        {
+            position: absolute;
+            top: 43%;
+            left: 1.5em;      
+            
+        }
+
+        .time-4
+        {
+            position: absolute;
+            top: 43%;
+            right: 1.5em;
+            
+        }
+
+
+
+        .minute-con
+        {
+            animation: rotate 3600s infinite linear;
+        }
+        .seconds-con
+        {
+            animation: rotate 60s infinite linear;
+        }
+        .hours-con
+        {
+            animation: rotate 43200s infinite linear;
+        }
+
+        @keyframes rotate
+        {
+            100%
+            {
+                transform: rotateZ(360deg);
+            }
+        }
+        
+        .minute-con
+        {
+            animation: rotate 3600s infinite steps(60);
+        }
+        .seconds-con
+        {
+            animation: rotate 60s infinite steps(60);
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="contaner">
+        <div class="clock">
+            <div class="time-1" ><h2>12</h2></div>
+            <div class="time-2"> <h2>6</h2></div>
+            <div class="time-3"> <h2>9</h2></div>
+            <div class="time-4"> <h2>3</h2></div>
+            <div class="cen"></div>
+            <div class="hours-con">
+                <div class="hours"></div>
+            </div>
+            <div class="minute-con">
+                 <div class="minutes"></div>
+            </div>
+            <div class="seconds-con">
+                 <div class="seconds"></div>
+            </div>
+              
+            <div class="back"></div>
+        </div>
+    </div>
+
+    <script>
+        function initLocalClocks(){
+            var date = new Date;
+            var seconds = date.getSeconds();
+            var minutes = date.getMinutes();
+            var hours =date.getHours();
+
+            var hands = [
+                {
+                    hand : 'hours',
+                    angle:(hours * 30 ) + (minutes / 2)
+                },
+
+                {
+                    hand : 'minutes',
+                    angle:(minutes * 6 ) 
+                },
+                {
+                    hand : 'seconds',
+                    angle:(seconds * 6 ) 
+                },
+            ];
+            for (var j =0; j<hands.length; j++)
+            {
+                var elements = document.querySelectorAll('.' + hands[j].hand);
+                for(var k=0; k<elements.length; k++)
+                {
+                    elements[k].style.webkitTransform ='rotateZ('+ hands[j].angle +'deg)';
+                    elements[k].style.transform ='rotateZ ('+hands[j].angle+'deg)';
+
+                    if(hands[j].hand === 'minutes')
+                    {
+                        elements [k].parentNode.setAttribute('data-second-angle',hands[j +1].angle);
+                    }
+                }
+            }
+        }
+        </script>
+</body>
+
+</html>
